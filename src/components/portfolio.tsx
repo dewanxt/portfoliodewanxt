@@ -1,7 +1,11 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import {
   ArrowDown,
+  ArrowUp,
   ArrowUpRight,
+  ChevronDown,
+  Download,
+  FileText,
   Github,
   Linkedin,
   Mail,
@@ -9,6 +13,7 @@ import {
   Radio,
 } from "lucide-react";
 
+import { SpaceScene } from "@/components/space-scene";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -34,6 +39,15 @@ const skills = ["HTML5", "CSS3", "JavaScript", "React.js", "Bootstrap", "Tailwin
 
 const journey = ["ADD YOUR EXPERIENCE", "ADD YOUR EDUCATION", "ADD YOUR MILESTONE"];
 
+const skillCategories = [
+  { name: "FRONT-END DEVELOPMENT", technologies: "HTML5 / CSS3 / JavaScript / React.js / Bootstrap / Tailwind CSS" },
+  { name: "BACK-END DEVELOPMENT", technologies: "ADD TECHNOLOGIES" },
+  { name: "UI / UX", technologies: "ADD TECHNOLOGIES" },
+  { name: "DATABASES", technologies: "Firebase" },
+  { name: "TOOLS & DEVOPS", technologies: "ADD TECHNOLOGIES" },
+  { name: "OTHER TECHNOLOGIES", technologies: "ADD TECHNOLOGIES" },
+];
+
 function SectionHeading({ label, title }: { label: string; title: string }) {
   return (
     <header className="section-heading">
@@ -55,14 +69,38 @@ function SpaceBackground() {
 }
 
 function Navbar() {
+  const [activeSection, setActiveSection] = useState("home");
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const update = () => {
+      const sections = navItems.map(([, href]) => document.querySelector(href)).filter(Boolean) as Element[];
+      const current = sections.reduce((closest, section) => {
+        const distance = Math.abs(section.getBoundingClientRect().top - window.innerHeight * 0.35);
+        return distance < closest.distance ? { id: section.id, distance } : closest;
+      }, { id: "home", distance: Number.POSITIVE_INFINITY });
+      setActiveSection(current.id);
+      const maximum = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(maximum > 0 ? Math.min(window.scrollY / maximum, 1) : 0);
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
   return (
     <header className="site-header">
+      <span className="scroll-progress" style={{ transform: `scaleX(${progress})` }} aria-hidden="true" />
       <a href="#home" className="wordmark" aria-label="Dewan, return home">
         DEWAN<span>.</span>
       </a>
       <nav className="desktop-nav" aria-label="Primary navigation">
         {navItems.map(([label, href]) => (
-          <a key={href} href={href}>
+          <a key={href} href={href} aria-current={activeSection === href.slice(1) ? "location" : undefined}>
             {label}
           </a>
         ))}
@@ -112,6 +150,7 @@ function ProfileImage() {
 function Hero() {
   return (
     <section id="home" className="hero-section">
+      <SpaceScene />
       <div className="hero-copy">
         <p className="technical-label hero-status"><span /> SIGNAL DETECTED / FRONT-END SYSTEMS</p>
         <h1>MD. SABBiR<br />HOSSAIN DEWAN</h1>
@@ -167,6 +206,19 @@ function SkillsConstellation() {
         ))}
         <span className="constellation-caption technical-label">CONSTELLATION / EDITABLE TECHNOLOGY MAP</span>
       </div>
+      <div className="skill-categories">
+        {skillCategories.map((category, index) => (
+          <article key={category.name}>
+            <span className="technical-label">NODE {String(index + 1).padStart(2, "0")}</span>
+            <h3>{category.name}</h3>
+            <p>{category.technologies}</p>
+            <div className="skill-placeholder-row">
+              <span>DESCRIPTION — EDITABLE</span>
+              <span>RELATED MISSIONS — PENDING</span>
+            </div>
+          </article>
+        ))}
+      </div>
     </section>
   );
 }
@@ -195,7 +247,8 @@ function ProjectCard({ index }: { index: number }) {
         <p>MISSION DATA PENDING</p>
         <div className="project-meta">
           <span>TECHNOLOGIES — PENDING</span>
-          <span className="project-link">VIEW PROJECT <ArrowUpRight /></span>
+          <span>FEATURED — UNSET</span>
+          <span className="project-link">GITHUB / LIVE / CASE STUDY <ArrowUpRight /></span>
         </div>
       </div>
     </article>
@@ -210,7 +263,7 @@ function Projects() {
         <p>Future work will be catalogued here as a sequence of discovered missions.</p>
         <span className="technical-label">ARCHIVE STATUS / AWAITING DATA</span>
       </div>
-      <div className="project-list">{[1, 2, 3].map((index) => <ProjectCard key={index} index={index} />)}</div>
+      <div className="project-list">{[1, 2, 3, 4, 5, 6].map((index) => <ProjectCard key={index} index={index} />)}</div>
     </section>
   );
 }
@@ -221,12 +274,20 @@ function Journey() {
       <SectionHeading label="04 — ORBIT" title="MY JOURNEY" />
       <div className="timeline">
         {journey.map((item, index) => (
-          <article key={item} className="timeline-entry">
+          <details key={item} className="timeline-entry">
             <div className="orbit-marker"><span /></div>
-            <p className="technical-label">ORBIT 0{index + 1}</p>
-            <h3>{item}</h3>
-            <p>TRAJECTORY DATA PENDING</p>
-          </article>
+            <summary>
+              <span className="technical-label">ORBIT 0{index + 1}</span>
+              <strong>{item}</strong>
+              <ChevronDown aria-hidden="true" />
+            </summary>
+            <div className="timeline-details">
+              <span>COMPANY — PENDING</span><span>POSITION — PENDING</span>
+              <span>DATES — PENDING</span><span>LOCATION — PENDING</span>
+              <span>RESPONSIBILITIES — PENDING</span><span>ACHIEVEMENTS — PENDING</span>
+              <span>TECHNOLOGIES — PENDING</span>
+            </div>
+          </details>
         ))}
       </div>
     </section>
@@ -241,6 +302,11 @@ function ResumeArchive() {
         <div>
           <span className="technical-label">DOCUMENT / 001</span>
           <h3>RESUME — COMING SOON</h3>
+          <p>A dedicated archive location is reserved for the future resume file.</p>
+          <div className="archive-actions">
+            <Button variant="signal" size="lg" disabled><Download /> DOWNLOAD RESUME</Button>
+            <Button variant="signalOutline" size="lg" disabled><FileText /> VIEW RESUME</Button>
+          </div>
         </div>
         <div className="archive-lock" aria-hidden="true"><span />SEALED</div>
       </div>
@@ -276,6 +342,9 @@ function Contact() {
           <label htmlFor="email">EMAIL</label>
           <Input id="email" name="email" type="email" required autoComplete="email" placeholder="Your email address" />
           <label htmlFor="message">MESSAGE</label>
+          <label htmlFor="subject">SUBJECT</label>
+          <Input id="subject" name="subject" required placeholder="Transmission subject" />
+          <label htmlFor="message">MESSAGE</label>
           <Textarea id="message" name="message" required rows={5} placeholder="Your transmission" />
           <Button type="submit" variant="signal" size="lg">SEND TRANSMISSION <Radio /></Button>
           <div className="signal-feedback" role="status" aria-live="polite">
@@ -291,8 +360,11 @@ function Footer() {
   return (
     <footer>
       <a href="#home" className="wordmark">DEWAN<span>.</span></a>
-      <p>MD. SABBiR HOSSAIN DEWAN / FRONT-END DEVELOPER</p>
-      <p className="technical-label">DHAKA / PLANET EARTH</p>
+      <div className="footer-statement">
+        <p>BUILT WITH CURIOSITY, PRECISION, AND A LOVE FOR THE UNKNOWN.</p>
+        <span>© {new Date().getFullYear()} MD. SABBiR HOSSAIN DEWAN</span>
+      </div>
+      <a href="#home" className="back-to-top" aria-label="Back to top"><ArrowUp /></a>
     </footer>
   );
 }
