@@ -8,3 +8,4 @@
 - [x] Add resume archive actions in a disabled coming-soon state
 - [x] Add subject and availability details to the contact experience
 - [x] Verify desktop, mobile, reduced-motion, keyboard, and runtime behavior
+- [x] Add a fixed multi-layer cursor-parallax space background with responsive planet drift
