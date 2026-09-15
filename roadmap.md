@@ -7,4 +7,4 @@
 - [x] Upgrade journey placeholders into accessible expandable timeline entries
 - [x] Add resume archive actions in a disabled coming-soon state
 - [x] Add subject and availability details to the contact experience
-- [ ] Verify desktop, mobile, reduced-motion, keyboard, and runtime behavior
+- [x] Verify desktop, mobile, reduced-motion, keyboard, and runtime behavior
