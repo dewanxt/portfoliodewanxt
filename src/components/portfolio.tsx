@@ -31,7 +31,8 @@ const navItems = [
   ["ABOUT", "#about"],
   ["SKILLS", "#skills"],
   ["PROJECTS", "#projects"],
-  ["JOURNEY", "#journey"],
+  ["EXPERIENCE", "#journey"],
+  ["RESUME", "#archive"],
   ["CONTACT", "#contact"],
 ] as const;
 
@@ -141,7 +142,7 @@ function ProfileImage() {
           <strong>IMAGE<br />PENDING</strong>
           <span>Replace with personal photograph</span>
         </div>
-        <span className="portrait-coordinate">23.8103° N / 90.4125° E</span>
+        <span className="portrait-coordinate">COORDINATES / NOT SET</span>
       </div>
     </div>
   );
@@ -156,7 +157,7 @@ function Hero() {
         <h1>MD. SABBiR<br />HOSSAIN DEWAN</h1>
         <div className="hero-rule" />
         <p className="hero-role">FRONT-END DEVELOPER</p>
-        <p className="hero-intro">Turning ideas into digital experiences across the universe of the web.</p>
+        <p className="hero-intro"><strong>Building digital experiences across the universe of the web.</strong> I create modern, responsive, and engaging interfaces with a focus on usability, visual quality, and meaningful interaction.</p>
         <div className="hero-actions">
           <Button asChild variant="signal" size="lg">
             <a href="#about">EXPLORE MY UNIVERSE <ArrowDown /></a>
@@ -183,6 +184,12 @@ function About() {
           <p>I enjoy exploring the intersection of design, technology, and user experience—creating websites that are not only visually compelling but also intuitive, responsive, and built with attention to detail.</p>
           <p>Currently, I’m continuing to expand my skills, experiment with new technologies, and build projects that challenge me to think beyond conventional interfaces.</p>
         </div>
+      </div>
+      <div className="profile-data" aria-label="Professional profile details">
+        <div><span>NAME</span><strong>MD. SABBiR HOSSAIN DEWAN</strong></div>
+        <div><span>SPECIALIZATION</span><strong>FRONT-END DEVELOPMENT</strong></div>
+        <div><span>LOCATION</span><strong>ADD LOCATION</strong></div>
+        <div><span>AVAILABILITY</span><strong>CONTACT FOR STATUS</strong></div>
       </div>
       <blockquote>TURNING IDEAS INTO DIGITAL EXPERIENCES THAT FEEL PURPOSEFUL, SEAMLESS, AND MEMORABLE.</blockquote>
     </section>
@@ -258,7 +265,7 @@ function ProjectCard({ index }: { index: number }) {
 function Projects() {
   return (
     <section id="projects" className="content-section projects-section">
-      <SectionHeading label="03 — MISSIONS" title="MISSIONS" />
+      <SectionHeading label="03 — MISSIONS" title="SELECTED MISSIONS" />
       <div className="projects-intro">
         <p>Future work will be catalogued here as a sequence of discovered missions.</p>
         <span className="technical-label">ARCHIVE STATUS / AWAITING DATA</span>
@@ -271,7 +278,7 @@ function Projects() {
 function Journey() {
   return (
     <section id="journey" className="content-section journey-section">
-      <SectionHeading label="04 — ORBIT" title="MY JOURNEY" />
+      <SectionHeading label="04 — ORBIT" title="PROFESSIONAL JOURNEY" />
       <div className="timeline">
         {journey.map((item, index) => (
           <details key={item} className="timeline-entry">
@@ -329,6 +336,7 @@ function Contact() {
       <div className="contact-grid">
         <div className="contact-copy">
           <p>Have an idea, project, or opportunity? Establish a connection.</p>
+          <span className="availability-status technical-label"><i /> AVAILABILITY / CONTACT FOR STATUS</span>
           <a href="mailto:sabbirdewann@gmail.com">sabbirdewann@gmail.com <ArrowUpRight /></a>
           <div className="social-links">
             <a href="https://github.com/dewanxt" target="_blank" rel="noreferrer" aria-label="GitHub"><Github /></a>
@@ -341,12 +349,11 @@ function Contact() {
           <Input id="name" name="name" required autoComplete="name" placeholder="Your name" />
           <label htmlFor="email">EMAIL</label>
           <Input id="email" name="email" type="email" required autoComplete="email" placeholder="Your email address" />
-          <label htmlFor="message">MESSAGE</label>
           <label htmlFor="subject">SUBJECT</label>
           <Input id="subject" name="subject" required placeholder="Transmission subject" />
           <label htmlFor="message">MESSAGE</label>
           <Textarea id="message" name="message" required rows={5} placeholder="Your transmission" />
-          <Button type="submit" variant="signal" size="lg">SEND TRANSMISSION <Radio /></Button>
+          <Button type="submit" variant="signal" size="lg">TRANSMIT MESSAGE <Radio /></Button>
           <div className="signal-feedback" role="status" aria-live="polite">
             {sent && <><span /><span /><span /> SIGNAL RECEIVED — LOCAL CONFIRMATION</>}
           </div>
@@ -362,7 +369,7 @@ function Footer() {
       <a href="#home" className="wordmark">DEWAN<span>.</span></a>
       <div className="footer-statement">
         <p>BUILT WITH CURIOSITY, PRECISION, AND A LOVE FOR THE UNKNOWN.</p>
-        <span>© {new Date().getFullYear()} MD. SABBiR HOSSAIN DEWAN</span>
+        <span>© 2026 MD. SABBiR HOSSAIN DEWAN</span>
       </div>
       <a href="#home" className="back-to-top" aria-label="Back to top"><ArrowUp /></a>
     </footer>
