@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 
 import { SpaceScene } from "@/components/space-scene";
+import { ParallaxSpaceBackground } from "@/components/parallax-space-background";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -55,17 +56,6 @@ function SectionHeading({ label, title }: { label: string; title: string }) {
       <p className="technical-label">{label}</p>
       <h2>{title}</h2>
     </header>
-  );
-}
-
-function SpaceBackground() {
-  return (
-    <div className="space-environment" aria-hidden="true">
-      <div className="stars stars-near" />
-      <div className="stars stars-far" />
-      <div className="space-haze" />
-      <div className="film-grain" />
-    </div>
   );
 }
 
@@ -380,7 +370,7 @@ export function Portfolio() {
   return (
     <div className="portfolio-shell">
       <a className="skip-link" href="#about">Skip to content</a>
-      <SpaceBackground />
+      <ParallaxSpaceBackground />
       <Navbar />
       <main>
         <Hero />
